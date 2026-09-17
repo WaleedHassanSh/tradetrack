@@ -30,11 +30,19 @@ def test_calculate_profit_loss():
     assert calculate_profit_loss("short", 100, 90, 2) == 20
     assert calculate_profit_loss("long", 100, 95, 2) == -10
 
+    with pytest.raises(ValueError):
+        calculate_profit_loss("buy", 100, 110, 2)
+
 
 def test_calculate_r_multiple():
     assert calculate_r_multiple("long", 100, 110, 95) == 2
     assert calculate_r_multiple("short", 100, 90, 105) == 2
     assert calculate_r_multiple("long", 100, 95, 95) == -1
+
+    with pytest.raises(ValueError):
+        calculate_r_multiple("buy", 100, 110, 95)
+    with pytest.raises(ValueError):
+        calculate_r_multiple("long", 100, 110, 100)
 
 
 def test_summarize_trades():
@@ -63,11 +71,10 @@ def test_summarize_empty_trades():
     assert summary["average_r"] == 0
 
 
-def test_load_trades():
-    trades = load_trades("trades.csv")
+def test_load_trades(tmp_path):
+    file_path = tmp_path / "trades.csv"
 
-    # Add trades to the CSV file before running this test
-    with open("trades.csv", "w", newline="") as file:
+    with open(file_path, "w", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=FIELDNAMES)
         writer.writeheader()
         writer.writerow(
@@ -87,7 +94,8 @@ def test_load_trades():
             }
         )
 
-    trades = load_trades("trades.csv")
+    trades = load_trades(file_path)
+
     assert len(trades) == 1
     assert trades[0]["symbol"] == "BTCUSDT"
     assert trades[0]["side"] == "long"

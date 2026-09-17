@@ -193,6 +193,7 @@ Then choose one of the available options:
 ```text
 1. Add trade
 2. View summary
+3. Exit
 ```
 
 ## Testing
@@ -216,6 +217,7 @@ The tests currently cover:
 - Performance summaries
 - Empty trade summaries
 - Floating-point summary calculations
+- Loading trade data correctly from a CSV file
 
 ## Technologies
 
@@ -273,8 +275,6 @@ Current limitations include:
 - No authentication or multiple users
 - No charts or visual analytics
 - No filtering by symbol or strategy
-- The application performs one menu operation per run
-- Some invalid interactive inputs can currently terminate the program instead of prompting again
 - Breakeven trades are included in total trades but are not classified as wins or losses
 
 TradeTrack does **not** provide trading signals, financial advice, or market predictions.
@@ -285,8 +285,6 @@ It only records and summarizes trades supplied by the user.
 
 Possible future improvements include:
 
-- More robust input validation
-- Persistent command-line menu
 - List and inspect individual trades
 - Filter trades by symbol or strategy
 - Analyze mistake tags

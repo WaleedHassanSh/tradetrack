@@ -145,15 +145,23 @@ def calculate_profit_loss(side, entry, exit_price, position_size):
         return (exit_price - entry) * position_size
     elif side == "short":
         return (entry - exit_price) * position_size
+    else:
+        raise ValueError("Side must be 'long' or 'short'")
 
 
 def calculate_r_multiple(side, entry, exit_price, stop_loss):
     if side == "long":
         reward = exit_price - entry
         risk = entry - stop_loss
-    else:
+    elif side == "short":
         reward = entry - exit_price
         risk = stop_loss - entry
+
+    else:
+        raise ValueError("Side must be 'long' or 'short'")
+
+    if risk <= 0:
+        raise ValueError("Invalid stop loss")
 
     return reward / risk
 
