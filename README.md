@@ -78,7 +78,7 @@ R-multiple = 10 / 5 = 2.0
 
 ## How It Works
 
-TradeTrack currently provides two main operations:
+TradeTrack currently provides three main operations:
 
 ```text
 1. Add trade
