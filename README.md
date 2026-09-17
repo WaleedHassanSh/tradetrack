@@ -118,18 +118,21 @@ The program loads all stored trades and calculates aggregate performance statist
 Example output:
 
 ```text
-Total Trades: 3
-Winning Trades: 2
-Losing Trades: 1
-Win Rate: 66.67%
-Total Profit/Loss: 40.00
-Average R: 1.33
+Total Trades: 6
+Winning Trades: 3
+Losing Trades: 2
+Win Rate: 50.00%
+Total Profit/Loss: 18.00
+Average R: 0.90
 ```
 
 ## Project Structure
 
 ```text
 tradetrack/
+├── assets/
+│   ├── add-trade.png
+│   └── performance-summary.png
 ├── README.md
 ├── project.py
 ├── test_project.py
@@ -157,7 +160,7 @@ Contains pytest tests for the main business logic.
 
 ### `trades.csv`
 
-Stores the recorded trades.
+Stores trade records. The repository includes synthetic sample data for demonstration purposes.
 
 ### `requirements.txt`
 
