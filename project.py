@@ -76,10 +76,6 @@ def get_trade():
                 print("\nPrices and position size must be greater than zero.")
                 continue
 
-            if entry == exit_price:
-                print("\nEntry price and exit price cannot be the same.")
-                continue
-
         except ValueError:
             print("\nInvalid input. Please enter numeric values.")
             continue
@@ -94,14 +90,6 @@ def get_trade():
         side = input("Side: ").strip().lower()
         if side not in ["long", "short"]:
             print("\nInvalid side. Please enter 'long' or 'short'.")
-            continue
-
-        if side == "long" and exit_price <= stop_loss:
-            print("\nFor long trades, exit price should be greater than stop loss.")
-            continue
-
-        elif side == "short" and exit_price >= stop_loss:
-            print("\nFor short trades, exit price should be less than stop loss.")
             continue
 
         if side == "long" and entry <= stop_loss:

@@ -83,6 +83,7 @@ TradeTrack currently provides two main operations:
 ```text
 1. Add trade
 2. View summary
+3. Exit
 ```
 
 ### Add Trade
