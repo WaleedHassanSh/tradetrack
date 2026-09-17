@@ -1,5 +1,5 @@
 import csv
-import datetime
+from datetime import datetime
 
 FIELDNAMES = [
     "date",
@@ -19,20 +19,26 @@ FIELDNAMES = [
 
 def main():
 
-    print("1. Add trade\n2. View summary")
+    while True:
+        print("1. Add trade\n2. View summary\n3. Exit")
 
-    choice = input("Choose: ").strip()
+        choice = input("\nChoose: ").strip()
 
-    if choice == "1":
-        add_trade()
+        if choice == "1":
+            add_trade()
 
-    elif choice == "2":
-        trades = load_trades()
-        summary = summarize_trades(trades)
-        print_summary(summary)
+        elif choice == "2":
+            trades = load_trades()
+            summary = summarize_trades(trades)
+            print_summary(summary)
 
-    else:
-        print("Invalid choice")
+        elif choice == "3":
+            print("\nExiting...\n")
+            break
+
+        else:
+            print("\nInvalid choice. Please choose 1, 2, or 3.\n")
+            continue
 
 
 def add_trade():
@@ -55,33 +61,83 @@ def add_trade():
             writer.writeheader()
 
         writer.writerow(trade)
-        print("Trade saved.")
+        print("\nTrade saved.\n")
 
 
 def get_trade():
-    date = str(datetime.date.today())
-    symbol = input("Symbol: ").strip().upper()
-    side = input("Side: ").strip().lower()
-    entry = float(input("Entry Price: "))
-    exit_price = float(input("Exit Price: "))
-    stop_loss = float(input("Stop Loss: "))
-    position_size = float(input("Position Size: "))
-    strategy = input("Strategy: ").strip().lower()
-    mistake_tag = input("Mistake Tag: ").strip().lower()
-    notes = input("Notes: ").strip()
+    while True:
+        try:
+            entry = float(input("\nEntry Price: "))
+            exit_price = float(input("Exit Price: "))
+            stop_loss = float(input("Stop Loss: "))
+            position_size = float(input("Position Size: "))
 
-    return {
-        "date": date,
-        "symbol": symbol,
-        "side": side,
-        "entry": entry,
-        "exit_price": exit_price,
-        "stop_loss": stop_loss,
-        "position_size": position_size,
-        "strategy": strategy,
-        "mistake_tag": mistake_tag,
-        "notes": notes,
-    }
+            if entry <= 0 or exit_price <= 0 or stop_loss <= 0 or position_size <= 0:
+                print("\nPrices and position size must be greater than zero.")
+                continue
+
+            if entry == exit_price:
+                print("\nEntry price and exit price cannot be the same.")
+                continue
+
+        except ValueError:
+            print("\nInvalid input. Please enter numeric values.")
+            continue
+
+        date = str(datetime.now().astimezone().date())
+
+        symbol = input("Symbol: ").strip().upper()
+        if len(symbol) == 0:
+            print("\nSymbol cannot be empty.")
+            continue
+
+        side = input("Side: ").strip().lower()
+        if side not in ["long", "short"]:
+            print("\nInvalid side. Please enter 'long' or 'short'.")
+            continue
+
+        if side == "long" and exit_price <= stop_loss:
+            print("\nFor long trades, exit price should be greater than stop loss.")
+            continue
+
+        elif side == "short" and exit_price >= stop_loss:
+            print("\nFor short trades, exit price should be less than stop loss.")
+            continue
+
+        if side == "long" and entry <= stop_loss:
+            print("\nFor long trades, entry price should be greater than stop loss.")
+            continue
+        elif side == "short" and entry >= stop_loss:
+            print("\nFor short trades, entry price should be less than stop loss.")
+            continue
+
+        strategy = input("Strategy: ").strip().lower()
+        if strategy == "":
+            print("\nStrategy cannot be empty.")
+            continue
+
+        mistake_tag = input("Mistake Tag: ").strip().lower()
+        if mistake_tag == "":
+            print("\nMistake tag cannot be empty.")
+            continue
+
+        notes = input("Notes: ").strip()
+        if notes == "":
+            print("\nNotes cannot be empty.")
+            continue
+
+        return {
+            "date": date,
+            "symbol": symbol,
+            "side": side,
+            "entry": entry,
+            "exit_price": exit_price,
+            "stop_loss": stop_loss,
+            "position_size": position_size,
+            "strategy": strategy,
+            "mistake_tag": mistake_tag,
+            "notes": notes,
+        }
 
 
 def calculate_profit_loss(side, entry, exit_price, position_size):
@@ -89,22 +145,15 @@ def calculate_profit_loss(side, entry, exit_price, position_size):
         return (exit_price - entry) * position_size
     elif side == "short":
         return (entry - exit_price) * position_size
-    else:
-        raise ValueError("Side must be 'long' or 'short'")
 
 
 def calculate_r_multiple(side, entry, exit_price, stop_loss):
     if side == "long":
         reward = exit_price - entry
         risk = entry - stop_loss
-    elif side == "short":
+    else:
         reward = entry - exit_price
         risk = stop_loss - entry
-    else:
-        raise ValueError("Side must be 'long' or 'short'")
-
-    if risk <= 0:
-        raise ValueError("Invalid stop loss")
 
     return reward / risk
 
@@ -162,12 +211,14 @@ def summarize_trades(trades):
 
 
 def print_summary(summary):
+    print("\nSummary:")
     print("Total Trades: ", summary["total_trades"])
     print("Winning Trades: ", summary["winning_trades"])
     print("Losing Trades: ", summary["losing_trades"])
     print(f"Win Rate: {summary['win_rate']:.2f}%")
     print(f"Total Profit/Loss: {summary['total_profit_loss']:.2f}")
     print(f"Average R: {summary['average_r']:.2f}")
+    print()
 
 
 if __name__ == "__main__":

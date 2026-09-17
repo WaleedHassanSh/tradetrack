@@ -1,33 +1,307 @@
 # TradeTrack
 
-#### Video Demo: https://youtu.be/-YzMhaj9vw0
+TradeTrack is a command-line trading journal and performance analysis tool built with Python.
 
-#### Description:
+It allows users to record completed trades in a CSV file and review basic performance statistics such as total trades, winning and losing trades, win rate, total profit/loss, and average R-multiple.
 
-TradeTrack is a command-line trading journal and performance analysis program written in Python. The purpose of the project is to help a trader record completed trades, save them in a CSV file, and review basic performance statistics such as total trades, winning trades, losing trades, win rate, total profit or loss, and average R-multiple.
+This project was originally built as my final project for **Harvard's CS50's Introduction to Programming with Python (CS50P)** and represents the main project from the Python programming phase of my CS/AI/ML learning roadmap.
 
-I built this project because trading is not only about finding entries and exits, but also about tracking decisions, reviewing mistakes, and measuring performance over time. Many beginner traders focus only on whether a trade won or lost, but a better trading journal should also record risk, strategy, mistake tags, and notes. TradeTrack is designed to be simple, practical, and easy to run from the terminal.
+## Demo
 
-When the program starts, it displays a small menu with two options. The first option allows the user to add a new trade. The program asks for the trade symbol, side, entry price, exit price, stop loss, position size, strategy, mistake tag, and notes. It automatically records the current date using Python's datetime module. After collecting the trade details, the program calculates the trade's profit or loss and R-multiple, then saves the full trade record into trades.csv.
+Video demonstration:
 
-The second option allows the user to view a performance summary. The program loads all saved trades from the CSV file, converts numeric values back into floats, and calculates summary statistics. These statistics include the total number of trades, number of winning trades, number of losing trades, win rate percentage, total profit/loss, and average R-multiple. If no trade file exists yet, the program handles that case safely and returns an empty summary instead of crashing.
+[Watch the TradeTrack demo on YouTube](https://youtu.be/-YzMhaj9vw0)
 
-The main file of the project is project.py. It contains the main() function, which controls the menu, and several helper functions. The add_trade() function handles the process of getting a trade, calculating its performance values, and saving it to the CSV file. The get_trade() function collects user input and returns a dictionary representing one trade. The calculate_profit_loss() function calculates profit or loss differently depending on whether the trade is long or short. The calculate_r_multiple() function calculates reward divided by risk and validates that the stop loss creates a valid risk amount. The load_trades() function reads saved trades from trades.csv, and summarize_trades() calculates the summary statistics. The print_summary() function displays the final summary in a clean format.
+## Features
 
-The test_project.py file contains pytest tests for the main calculation and summary functions. I tested calculate_profit_loss(), calculate_r_multiple(), and summarize_trades() because these functions contain the most important logic and do not depend on user input. The tests check long trades, short trades, losing trades, invalid trade sides, invalid stop losses, normal summaries, and empty summaries.
+- Record completed trades
+- Automatically store the current date
+- Support long and short trades
+- Calculate profit or loss automatically
+- Calculate R-multiple automatically
+- Store trade records in a CSV file
+- Load previously saved trades
+- Generate a performance summary
+- Calculate:
+  - Total trades
+  - Winning trades
+  - Losing trades
+  - Win rate
+  - Total profit/loss
+  - Average R-multiple
 
-I chose CSV as the storage format because it is simple, readable, and suitable for a beginner-level Python project. It also allows the trade journal to be opened later in spreadsheet software if needed. I chose a command-line interface instead of a graphical interface because the goal of this project is to focus on Python fundamentals, file handling, functions, error handling, testing, and clean program structure.
+- Handle a missing trade file safely
+- Unit tests for the main calculation and summary functions
 
-One design choice I made was to calculate profit/loss and R-multiple automatically instead of asking the user to enter them manually. This reduces user error and makes the journal more useful. Another design choice was to use dictionaries for trades because each trade has clearly named fields such as symbol, entry, exit_price, stop_loss, and profit_loss.
+## Trade Data
 
-This project does not provide trading signals, financial advice, or market predictions. It is only a journaling and analysis tool for trades that the user has already taken. In the future, this project could be improved by adding features such as listing all trades, exporting a Markdown report, filtering trades by symbol or strategy, showing the most common mistake tag, and creating charts from the saved trading data.
+Each trade contains the following fields:
 
-To run the program, use:
+- Date
+- Symbol
+- Side
+- Entry price
+- Exit price
+- Stop loss
+- Position size
+- Profit/loss
+- R-multiple
+- Strategy
+- Mistake tag
+- Notes
 
-    python project.py
+Example:
 
-To run the tests, use:
+```text
+BTCUSDT
+Side: long
+Entry: 100
+Exit: 110
+Stop Loss: 95
+Position Size: 2
+```
 
-    pytest test_project.py
+For this trade:
 
-The project uses Python's standard libraries, including csv and datetime. The tests use pytest.
+```text
+Profit/Loss = (110 - 100) × 2 = 20
+```
+
+and:
+
+```text
+Risk = 100 - 95 = 5
+Reward = 110 - 100 = 10
+
+R-multiple = 10 / 5 = 2.0
+```
+
+## How It Works
+
+TradeTrack currently provides two main operations:
+
+```text
+1. Add trade
+2. View summary
+```
+
+### Add Trade
+
+The program collects the trade details from the user.
+
+It then calculates:
+
+```text
+Profit/Loss
+R-multiple
+```
+
+and stores the complete trade record in:
+
+```text
+trades.csv
+```
+
+### View Summary
+
+The program loads all stored trades and calculates aggregate performance statistics.
+
+Example output:
+
+```text
+Total Trades: 3
+Winning Trades: 2
+Losing Trades: 1
+Win Rate: 66.67%
+Total Profit/Loss: 40.00
+Average R: 1.33
+```
+
+## Project Structure
+
+```text
+tradetrack/
+├── README.md
+├── project.py
+├── test_project.py
+├── requirements.txt
+├── trades.csv
+└── .gitignore
+```
+
+### `project.py`
+
+Contains the main application and core functions:
+
+- `main()`
+- `add_trade()`
+- `get_trade()`
+- `calculate_profit_loss()`
+- `calculate_r_multiple()`
+- `load_trades()`
+- `summarize_trades()`
+- `print_summary()`
+
+### `test_project.py`
+
+Contains pytest tests for the main business logic.
+
+### `trades.csv`
+
+Stores the recorded trades.
+
+### `requirements.txt`
+
+Contains the testing dependency:
+
+```text
+pytest
+```
+
+The application itself uses only Python standard-library modules.
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/WaleedHassanSh/tradetrack.git
+```
+
+Move into the project directory:
+
+```bash
+cd tradetrack
+```
+
+Install the required dependency:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
+Run the application:
+
+```bash
+python project.py
+```
+
+Then choose one of the available options:
+
+```text
+1. Add trade
+2. View summary
+```
+
+## Testing
+
+The project uses `pytest`.
+
+Run the tests with:
+
+```bash
+pytest
+```
+
+The tests currently cover:
+
+- Profit/loss calculations for long trades
+- Profit/loss calculations for short trades
+- Losing trades
+- Invalid trade sides
+- R-multiple calculations
+- Invalid stop-loss conditions
+- Performance summaries
+- Empty trade summaries
+- Floating-point summary calculations
+
+## Technologies
+
+- Python
+- CSV
+- `datetime`
+- pytest
+- Git
+- GitHub
+
+## Design Decisions
+
+### CSV Storage
+
+CSV was chosen because it is simple, human-readable, and appropriate for a small Python project.
+
+It also makes the stored data easy to inspect or open in spreadsheet software.
+
+### Separate Calculation Functions
+
+Profit/loss, R-multiple, and summary calculations are implemented as separate functions instead of being placed directly inside the user-interface logic.
+
+This keeps the program easier to understand and makes the core logic independently testable.
+
+### Automatic Calculations
+
+Profit/loss and R-multiple are calculated automatically from the trade data instead of being entered manually.
+
+This reduces repeated manual calculations and keeps the stored results consistent with the supplied trade values.
+
+## What I Learned
+
+This project helped me practice and reinforce:
+
+- Python functions
+- Conditionals and control flow
+- Dictionaries
+- File I/O
+- CSV handling
+- Exceptions
+- Working with numeric data
+- Separating program logic into reusable functions
+- Unit testing with pytest
+- Designing a small command-line application
+- Organizing and documenting a Python project
+
+## Limitations
+
+TradeTrack is intentionally a small command-line project focused on Python fundamentals.
+
+Current limitations include:
+
+- No graphical or web interface
+- No database
+- No authentication or multiple users
+- No charts or visual analytics
+- No filtering by symbol or strategy
+- The application performs one menu operation per run
+- Some invalid interactive inputs can currently terminate the program instead of prompting again
+- Breakeven trades are included in total trades but are not classified as wins or losses
+
+TradeTrack does **not** provide trading signals, financial advice, or market predictions.
+
+It only records and summarizes trades supplied by the user.
+
+## Future Improvements
+
+Possible future improvements include:
+
+- More robust input validation
+- Persistent command-line menu
+- List and inspect individual trades
+- Filter trades by symbol or strategy
+- Analyze mistake tags
+- Export performance reports
+- Add charts and visual summaries
+- Improve test coverage for CSV loading and file operations
+
+## Project Context
+
+TradeTrack was originally developed as my final project for **CS50's Introduction to Programming with Python**.
+
+It also serves as the main showcase project from **Phase 1 — Python Programming** of my broader CS/AI/ML learning roadmap.
+
+Roadmap repository:
+
+[View my CS/AI/ML roadmap](https://github.com/WaleedHassanSh/ai-ml-roadmap)
+
+The purpose of this phase was to build a strong Python foundation before progressing into data analysis, machine learning, deep learning, and modern AI systems.
