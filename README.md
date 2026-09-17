@@ -12,6 +12,14 @@ Video demonstration:
 
 [Watch the TradeTrack demo on YouTube](https://youtu.be/-YzMhaj9vw0)
 
+### Add a Trade
+
+![TradeTrack add trade example](assets/add-trade.png)
+
+### Performance Summary
+
+![TradeTrack performance summary](assets/performance-summary.png)
+
 ## Features
 
 - Record completed trades

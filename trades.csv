@@ -1,2 +1,7 @@
 date,symbol,side,entry,exit_price,stop_loss,position_size,profit_loss,r_multiple,strategy,mistake_tag,notes
-2026-05-02,BTCUSDT,long,100.0,110.0,95.0,2.0,20.0,2.0,breakout,none,clean breakout trade
+2026-09-08,BTCUSDT,long,100.0,110.0,95.0,2.0,20.0,2.0,breakout,none,clean breakout trade
+2026-09-09,ETHUSDT,short,200.0,190.0,205.0,1.5,15.0,2.0,resistance,none,good rejection setup
+2026-09-10,SOLUSDT,long,50.0,47.0,45.0,4.0,-12.0,-0.6,breakout,early_entry,entered before confirmation
+2026-09-11,AAPL,long,180.0,180.0,175.0,3.0,0.0,0.0,support,none,closed at breakeven
+2026-09-12,TSLA,short,250.0,260.0,260.0,2.0,-20.0,-1.0,resistance,late_entry,stop loss reached
+2026-09-17,NVDA,long,120.0,135.0,115.0,1.0,15.0,3.0,breakout,none,strong breakout confirmation
