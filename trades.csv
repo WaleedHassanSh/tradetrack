@@ -1,0 +1,2 @@
+date,symbol,side,entry,exit_price,stop_loss,position_size,profit_loss,r_multiple,strategy,mistake_tag,notes
+2026-05-02,BTCUSDT,long,100.0,110.0,95.0,2.0,20.0,2.0,breakout,none,clean breakout trade
